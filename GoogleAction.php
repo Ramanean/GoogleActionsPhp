@@ -35,7 +35,7 @@ Class GoogleAction
 			// "displayText"=>$content, 
 			);
 		return $simpleResponse;
-	}
+	} 
 
 	function SimpleGoogleTextToSpeech($TextContent)
 	{
