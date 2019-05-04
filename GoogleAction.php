@@ -67,13 +67,13 @@ Class GoogleAction
     ************************************************************************/
     function SSMLSentenceConvertArray($TextContent)
     {
-    $TextContent=array_unique($TextContent);
-    foreach($TextContent as $text)
-    {
-      $content[]="<p><s>".$text."</s></p> <break time=\"1\" />";      
-    }
-    $speechContent=implode("",$content);
-    return $speechContent;
+		$TextContent=array_unique($TextContent);
+		foreach($TextContent as $text)
+		{
+		  $content[]="<p><s>".$text."</s></p> <break time=\"1\" />";      
+		}
+		$speechContent=implode("",$content);
+		return $speechContent;
     }
 
   
@@ -81,9 +81,7 @@ Class GoogleAction
     Converting Text into Final SSML
     ************************************************************************/
     function GoogleFinalSSML($TextContent)
-    {
-     
-
+    {     
        $fullContentssml="<speak><voice gender='".$this->Gender."' variant='".$this->Variant."'><prosody rate='Medium' pitch='".$this-   >Pitch."'>".$TextContent."</prosody></voice></speak>";
        return $fullContentssml;
     }
@@ -95,7 +93,6 @@ Class GoogleAction
 
     function GoogleDisplayText($TextContent)
     {  
-
        @$displayText=implode("\n\n\n",$TextContent);
        return $displayText;  
     }
@@ -119,32 +116,31 @@ Class GoogleAction
 
     function GoogleRichResponseSuggestions($fullContentssml,$displayText,$Suggestions)
     {
-
-      $simpleResponse=array("ssml"=>$fullContentssml,"displayText"=>$displayText);
-      $items[]=array("simpleResponse"=>$simpleResponse);
-      $richResponse=array("items"=>$items,"suggestions"=>$Suggestions);	
-      return $richResponse;
+		$simpleResponse=array("ssml"=>$fullContentssml,"displayText"=>$displayText);
+		$items[]=array("simpleResponse"=>$simpleResponse);
+		$richResponse=array("items"=>$items,"suggestions"=>$Suggestions);	
+		return $richResponse;
     }
 
     function GoogleRichResponseBasicSuggestions($fullContentssml,$displayText,$basicCard,$Suggestions)
     {
-      $simpleResponse=array("ssml"=>$fullContentssml,"displayText"=>$displayText);
-         $items[]=array("simpleResponse"=>$simpleResponse);
-         $items[]=array("basicCard"=>$basicCard);
-      $richResponse=array("items"=>$items,"suggestions"=>$Suggestions);	
-      return $richResponse;
+		$simpleResponse=array("ssml"=>$fullContentssml,"displayText"=>$displayText);
+		$items[]=array("simpleResponse"=>$simpleResponse);
+		$items[]=array("basicCard"=>$basicCard);
+		$richResponse=array("items"=>$items,"suggestions"=>$Suggestions);	
+      	return $richResponse;
     }
 	
     function GoogleSystemIntent($ListTitle,$ListItems)	
     {	
-            //$intent="actions.intent.TEXT";
-            $intent="actions.intent.OPTION";
-            $type="type.googleapis.com/google.actions.v2.OptionValueSpec";
+		//$intent="actions.intent.TEXT";
+		$intent="actions.intent.OPTION";
+		$type="type.googleapis.com/google.actions.v2.OptionValueSpec";
 
-            $listSelect=array("title"=>$ListTitle,"items"=>$ListItems);
-            $listData=array("@type"=>$type,"listSelect"=>$listSelect);
-            $systemIntent=array("intent"=>$intent,"data"=>$listData);
-            return $systemIntent;
+		$listSelect=array("title"=>$ListTitle,"items"=>$ListItems);
+		$listData=array("@type"=>$type,"listSelect"=>$listSelect);
+		$systemIntent=array("intent"=>$intent,"data"=>$listData);
+		return $systemIntent;
 
     }
  
@@ -152,34 +148,34 @@ Class GoogleAction
     function GoogleGetPermission($intentName)
     {
 
-    $intent="actions.intent.PERMISSION";
-    $type="type.googleapis.com/google.actions.v2.PermissionValueSpec";
-    $Data=array("@type"=>$type,"permissions"=>array("UPDATE"),"updatePermissionValueSpec"=>array("intent"=>$intentName));
-    $systemIntent=array("intent"=>$intent,"data"=>$Data);
-            $google=array(
-        'expectUserResponse'=> true,			
-        "systemIntent"=>$systemIntent
-    );
+		$intent="actions.intent.PERMISSION";
+		$type="type.googleapis.com/google.actions.v2.PermissionValueSpec";
+		$Data=array("@type"=>$type,"permissions"=>array("UPDATE"),"updatePermissionValueSpec"=>array("intent"=>$intentName));
+		$systemIntent=array("intent"=>$intent,"data"=>$Data);
+		$google=array(
+			'expectUserResponse'=> true,			
+			"systemIntent"=>$systemIntent
+		);
 
-    //Payload
-    $payLoad=array("google"=>$google);
-    return $payLoad;
+		//Payload
+		$payLoad=array("google"=>$google);
+		return $payLoad;
 
     }
 	
     function GooglePayload($ExpectUserResponse,$IsSsml,$NoInputPrompts,$RichResponse,$SystemIntent)
     {
 
-            $google=array(
-                'expectUserResponse'=> $ExpectUserResponse,
-                 'isSsml'=> $IsSsml,
-                 'noInputPrompts'=>$NoInputPrompts,
-                 'richResponse' => $RichResponse,
-                 "systemIntent"=>$SystemIntent
-            );			
-            //Payload
-            $payLoad=array("google"=>$google);
-            return $payLoad;			
+		$google=array(
+			'expectUserResponse'=> $ExpectUserResponse,
+			 'isSsml'=> $IsSsml,
+			 'noInputPrompts'=>$NoInputPrompts,
+			 'richResponse' => $RichResponse,
+			 "systemIntent"=>$SystemIntent
+		);			
+		//Payload
+		$payLoad=array("google"=>$google);
+		return $payLoad;			
     }	
 
 
@@ -187,26 +183,26 @@ Class GoogleAction
     function GooglePayload_WithoutSystemIntent($ExpectUserResponse,$IsSsml,$NoInputPrompts,$RichResponse)
     {
 
-            $google=array(
-                'expectUserResponse'=> $ExpectUserResponse,
-                 'isSsml'=> $IsSsml,
-                 'noInputPrompts'=>$NoInputPrompts,
-                 'richResponse' => $RichResponse
-            );
+		$google=array(
+			'expectUserResponse'=> $ExpectUserResponse,
+			 'isSsml'=> $IsSsml,
+			 'noInputPrompts'=>$NoInputPrompts,
+			 'richResponse' => $RichResponse
+		);
 
-            //Payload
-            $payLoad=array("google"=>$google);
-            return $payLoad;
+		//Payload
+		$payLoad=array("google"=>$google);
+		return $payLoad;
 
     }
   
-    function GoogleContext($sessionID,$parameters)
+    function GoogleContext($sessionID,$parameters,$Name)
     {
-            $sessionName="projects/ReadNews/agent/sessions/".$sessionID."/contexts/sitelist";
-            $contexts[]=array("name"=>$sessionName,
-                                "lifespanCount"=>30000,
-                                "parameters"=>$parameters);
-            return $contexts;
+		$sessionName="projects/".$Name."/agent/sessions/".$sessionID."/contexts/sitelist";
+		$contexts[]=array("name"=>$sessionName,
+							"lifespanCount"=>30000,
+							"parameters"=>$parameters);
+		return $contexts;
     }
   
 
@@ -214,50 +210,44 @@ Class GoogleAction
     //Basic Card for Google Action
     function GoogleBasicCard($Title,$FormattedText,$ButtonUrl,$ButtonTitle)
     {
-
-
-        $openUrlAction=array("url"=>$ButtonUrl);
-        $buttons=array("title"=>$ButtonTitle,"openUrlAction"=>$openUrlAction);
-        $basicCard=array(
-            "title"=>$Title,
-            "formattedText"=>$FormattedText,			
-            "buttons"=>array($buttons)
-        );
-        return $basicCard;
-
+		$openUrlAction=array("url"=>$ButtonUrl);
+		$buttons=array("title"=>$ButtonTitle,"openUrlAction"=>$openUrlAction);
+		$basicCard=array(
+			"title"=>$Title,
+			"formattedText"=>$FormattedText,			
+			"buttons"=>array($buttons)
+		);
+		return $basicCard;
     }
 	
  
     function GoogleBasicCardNoButton($Title,$FormattedText)
     {
 
-    //$openUrlAction=array("url"=>$ButtonUrl);
-    //$buttons=array("title"=>$ButtonTitle,"openUrlAction"=>$openUrlAction);
-    $basicCard=array(
-    "title"=>$Title,
-    "formattedText"=>$FormattedText,			
-    //"buttons"=>array($buttons)
-    );
-    return $basicCard;
+		//$openUrlAction=array("url"=>$ButtonUrl);
+		//$buttons=array("title"=>$ButtonTitle,"openUrlAction"=>$openUrlAction);
+		$basicCard=array(
+		"title"=>$Title,
+		"formattedText"=>$FormattedText,			
+		//"buttons"=>array($buttons)
+		);
+		return $basicCard;
 
     }
 		
      //Basic Card for Google Action
     function GoogleBasicCardWithImage($Title,$FormattedText,$ButtonUrl,$ButtonTitle,$ImageUrl,$ImageText)
     {
-
-
-        $openUrlAction=array("url"=>$ButtonUrl);
-        $buttons=array("title"=>$ButtonTitle,"openUrlAction"=>$openUrlAction);
-        $image=array("url"=>$ImageUrl,"accessibilityText"=>$ImageText);
-        $basicCard=array(
-            "title"=>$Title,
-            "formattedText"=>$FormattedText,
-            "image"=>$image,
-            "buttons"=>array($buttons)
-        );
-        return $basicCard;
-
+		$openUrlAction=array("url"=>$ButtonUrl);
+		$buttons=array("title"=>$ButtonTitle,"openUrlAction"=>$openUrlAction);
+		$image=array("url"=>$ImageUrl,"accessibilityText"=>$ImageText);
+		$basicCard=array(
+			"title"=>$Title,
+			"formattedText"=>$FormattedText,
+			"image"=>$image,
+			"buttons"=>array($buttons)
+		);
+		return $basicCard;
     } 
   	
 	
@@ -283,24 +273,24 @@ Class GoogleAction
     function GooglePayloadPossibleIntents($ExpectUserResponse,$IsSsml,$NoInputPrompts,$RichResponse)
     {
 
-        $systemIntent=array(
-            "intent"=>"actions.intent.SIGN_IN",
-            "data"=>array(
-                "@type"=> "type.googleapis.com/google.actions.v2.SignInValueSpec"
-            )
-            );
+		$systemIntent=array(
+			"intent"=>"actions.intent.SIGN_IN",
+			"data"=>array(
+				"@type"=> "type.googleapis.com/google.actions.v2.SignInValueSpec"
+			)
+			);
 
-        $google=array(
-            'expectUserResponse'=> $ExpectUserResponse,
-            'isSsml'=> $IsSsml,
-            'noInputPrompts'=>$NoInputPrompts,
-            'richResponse' => $RichResponse,
-             'systemIntent'=>$systemIntent				
-        );
+		$google=array(
+			'expectUserResponse'=> $ExpectUserResponse,
+			'isSsml'=> $IsSsml,
+			'noInputPrompts'=>$NoInputPrompts,
+			'richResponse' => $RichResponse,
+			 'systemIntent'=>$systemIntent				
+		);
 
-        //Payload
-        $payLoad=array("google"=>$google);
-        return $payLoad;
+		//Payload
+		$payLoad=array("google"=>$google);
+		return $payLoad;
 
     }	
 
