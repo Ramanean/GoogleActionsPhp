@@ -3,6 +3,17 @@
 	
 Class GoogleAction
 {
+	
+	/*
+	Some variables to set Google Intent options
+		To set ListIntent use $ListItent
+		To set ListType use $ListType
+		To set the voice Gender you can either use "Male" or "Female" for $Gender
+		To set different variant voices you can use 1,2, for $Variant
+		To set pitch you can use $Pitch
+		To set prosody you can sue $Prosody
+	*/
+	
 	var $ListIntent="actions.intent.OPTION";    
 	var $Listype="type.googleapis.com/google.actions.v2.OptionValueSpec";
 	var $Gender="female";
@@ -11,7 +22,11 @@ Class GoogleAction
 	var $Prosody="medium";
 
 
-	//SimpleResponse TextToSpeech for GoogleAction
+	/* Converting any content into TextSpeech
+	You can use either of the below two functions
+	1.GoogleTextToSpeech converts the content into Speech but won't display Text (For Google Home)
+	2.SimpleGoogleTextToSpeech given a json response of TextToSpeech as well as DisplayText*/
+	
 	function GoogleTextToSpeech($TextContent)
 	{
 		$content=implode("\n\n",$TextContent);	
@@ -25,7 +40,6 @@ Class GoogleAction
 	function SimpleGoogleTextToSpeech($TextContent)
 	{
         $content=$TextContent;
-        $content=
         $simpleResponse=array(
            "textToSpeech"=>"<Speak>".$content."</Speak>",
            "displayText"=>$content, 
